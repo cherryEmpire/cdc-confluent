@@ -1,0 +1,20 @@
+{
+  "name": "initial_digital_user_dev_user_sink_connector",
+  "config": {
+    "topics": "initial.digital.confluent.user_master",
+    "connector.class": "streams.kafka.connect.sink.Neo4jSinkConnector",
+    "errors.retry.timeout": "-1",
+    "errors.retry.delay.max.ms": "1000",
+    "errors.tolerance": "none",
+    "errors.log.enable": true,
+    "errors.log.include.messages": true,
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "neo4j.server.uri": "bolt://192.168.1.16:7687",
+    "neo4j.authentication.basic.username": "neo4j",
+    "neo4j.authentication.basic.password": "connect",
+    "neo4j.encryption.enabled": false,
+    "tasks.max": "1",
+    "neo4j.topic.cypher.initial.digital.confluent.user_master": "MERGE(user : User{user_skey : apoc.util.md5([event.user_id, 'user_master'])}) set user+= {user_id: event.user_id,user_type: event.user_type,user_level: event.user_level,user_name: event.user_name,password: event.password,department: event.department}"
+  }
+}

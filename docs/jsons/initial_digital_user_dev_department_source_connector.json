@@ -1,0 +1,28 @@
+{
+  "name": "initial_digital_user_dev_department_source_connector",
+  "config": {
+    "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
+    "topic.prefix": "initial.digital.user_dev.",
+    "mode": "bulk",
+    "poll.interval.ms": 36000000,
+    "catalog.pattern": "user_dev",
+    "table.whitelist": "department",
+    "tasks.max": "1",
+    "decimal.handling.mode": "string",
+    "time.precision.mode": "connect",
+    "transforms": "addStaticField,messageKey",
+    "transforms.addStaticField.type": "org.apache.kafka.connect.transforms.InsertField$Value",
+    "transforms.addStaticField.static.field": "source_system",
+    "transforms.addStaticField.static.value": "user_master",
+    "transforms.messageKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
+    "transforms.messageKey.fields": "id",
+    "errors.tolerance": "none",
+    "errors.log.enable": true,
+    "errors.log.include.messages": true,
+    "errors.retry.delay.max.ms": 60000,
+    "errors.retry.timeout": 300000,
+    "connection.url": "jdbc:mysql://192.168.1.14:3306?serverTimezone=UTC&defaultFetchSize=10000&useCursorFetch=true",
+    "connection.user": "root",
+    "connection.password": "cherry1234"
+  }
+}

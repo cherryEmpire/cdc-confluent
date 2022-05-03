@@ -1,0 +1,31 @@
+{
+  "name": "initial_digital_user_dev_user_source_connector",
+  "config": {
+    "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
+    "transforms.addStaticField.static.value": "user_master",
+    "errors.log.include.messages": "true",
+    "errors.retry.timeout": "300000",
+    "connection.password": "cherry1234",
+    "catalog.pattern": "confluent",
+    "tasks.max": "1",
+    "time.precision.mode": "connect",
+    "transforms": "addStaticField,messageKey",
+    "errors.retry.delay.max.ms": "60000",
+    "transforms.messageKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "transforms.messageKey.fields": "user_id",
+    "table.whitelist": "user_master",
+    "mode": "bulk",
+    "topic.prefix": "initial.digital.confluent.",
+    "decimal.handling.mode": "string",
+    "connection.user": "root",
+    "poll.interval.ms": "36000000",
+    "transforms.addStaticField.static.field": "source_system",
+    "name": "initial_digital_user_dev_user_source_connector",
+    "errors.tolerance": "none",
+    "transforms.addStaticField.type": "org.apache.kafka.connect.transforms.InsertField$Value",
+    "connection.url": "jdbc:mysql://192.168.1.16:3307/confluent?serverTimezone=UTC&defaultFetchSize=10000&useCursorFetch=true",
+    "errors.log.enable": "true"
+  }
+}

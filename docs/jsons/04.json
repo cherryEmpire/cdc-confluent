@@ -1,0 +1,24 @@
+{
+  "name": "cdc_digital_account_master_app_role_neo4j_sink_connector",
+  "config": {
+    "tasks.max": "1",
+    "topics": "cdc.digital.account_master.v2.app_role",
+    "connector.class": "streams.kafka.connect.sink.Neo4jSinkConnector",
+    "errors.retry.timeout": "-1",
+    "errors.retry.delay.max.ms": "1000",
+    "errors.tolerance": "none",
+    "errors.log.enable": true,
+    "errors.log.include.messages": true,
+    "neo4j.server.uri": "bolt://neo4j:7687",
+    "neo4j.authentication.basic.username": "neo4j",
+    "neo4j.authentication.basic.password": "connect",
+    "neo4j.encryption.enabled": false,
+    "neo4j.batch.size": "1",
+    "neo4j.batch.parallelize": false,
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "key.converter.schemas.enable": false,
+    "value.converter.schemas.enable": false,
+    "neo4j.topic.cypher.cdc.digital.account_master.v2.app_role": "FOREACH(ignoreMe in CASE WHEN (event.source.table = \"app_role\" AND (event.op = \"c\" OR event.op = \"u\")) THEN [1] ELSE [] END | MERGE (app_role:ApplicationRole {application_role_skey: apoc.util.md5([event.after.app_role_id, event.source_system])}) MERGE (app:Application{ application_skey: apoc.util.md5([event.after.application, event.source_system]) }) MERGE (app)-[hasAppRole:HAS_APP_ROLE]->(app_role) SET app_role :Event,app_role += {app_role_id: apoc.convert.toString(event.after.app_role_id),name: event.after.role,role: event.after.role,source_system: event.source_system,auth_group: event.after.auth_group,auth_namespace: event.after.auth_namespace,is_active: event.after.is_active,created_by: event.after.created_by,created_by_user_id: event.after.created_by_user_id,update_by: event.after.last_modified_by,update_by_user_id: event.after.last_modified_by_user_id,create_dttm: event.after.created_dttm,update_dttm: event.after.last_modified_dttm,last_cdc_modified_dttm: datetime(),last_cdc_modified_by: \"c360-sync\",last_kafka_event_dttm : datetime()} SET app :Event, app += {name: event.after.application,source_system: event.source_system,is_active: event.after.is_active,created_by: event.after.created_by,created_by_user_id: event.after.created_by_user_id,update_by: event.after.last_modified_by,update_by_user_id: event.after.last_modified_by_user_id,create_dttm: event.after.created_dttm,update_dttm: event.after.last_modified_dttm,last_cdc_modified_dttm: datetime(),last_cdc_modified_by: \"c360-sync\",last_kafka_event_dttm : datetime()}) with event as event CALL apoc.do.when(event.source.table = \"app_role\" AND event.op = \"u\" AND event.before.application <> event.after.application,\"MATCH (app:Application{ application_skey: apoc.util.md5([event.before.application, event.source_system]) }) -[hasAppRole:HAS_APP_ROLE]-> (app_role:ApplicationRole {application_role_skey: apoc.util.md5([event.after.app_role_id, event.source_system])}) DELETE hasAppRole\",\"\",{event:event}) yield value with event as event CALL apoc.do.when(event.source.table = \"app_role\" AND (event.op = \"d\"),\"MATCH (app_role:ApplicationRole {application_role_skey: apoc.util.md5([event.before.app_role_id, event.source_system])}) DETACH DELETE app_role\",\"\",{event:event}) yield value return *"
+  }
+}

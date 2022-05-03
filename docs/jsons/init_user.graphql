@@ -1,0 +1,10 @@
+MERGE(user : User{user_skey : apoc.util.md5([event.user_id, 'user_master'])})
+
+set user+= {
+    user_id: event.user_id,
+    user_type: event.user_type,
+    user_level: event.user_level,
+    user_name: event.user_name,
+    password: event.password,
+    department: event.department
+}

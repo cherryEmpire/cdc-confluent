@@ -1,0 +1,33 @@
+{
+  "name": "initial_digital_user_dev_department_sink_connector",
+  "config": {
+    "topics": "initial.digital.user_dev.department",
+    "connector.class": "streams.kafka.connect.sink.Neo4jSinkConnector",
+    "errors.retry.timeout": "-1",
+    "errors.retry.delay.max.ms": "1000",
+    "errors.tolerance": "none",
+    "errors.log.enable": true,
+    "errors.log.include.messages": true,
+    "neo4j.server.uri": "bolt://192.168.1.14:7687",
+    "neo4j.authentication.basic.username": "neo4j",
+    "neo4j.authentication.basic.password": "connect",
+    "neo4j.encryption.enabled": false,
+    "tasks.max": "1",
+    "neo4j.topic.cypher.initial.digital.user_dev.user": "
+    MERGE(department : Department{department_skey: apoc.util.md5([event.id, 'user_master'])})
+    SET department+= {
+      id: event.id,
+      name: event.name,
+      parent_id: event.parent_id,
+      type: event.type,
+      address: event.address,
+      last_cdc_modified_by : \"cdc-confluent\",
+      last_cdc_modified_dttm : datetime()
+    }
+    FOREACH(ignoreMe IN CASE WHEN(event.parent_id IS NOT NULL) THEN[1] ELSE [] END |
+      MERGE(parent: Department{department_skey : apoc.util.md5([event.parent_id, 'user_master'])})
+      -[hasSubDepartment:HAS_SUB_DEPARTMENT]->(sub: Department{department_skey: apoc.util.md5([event.id, 'user_master'])})
+    )
+"
+  }
+}
