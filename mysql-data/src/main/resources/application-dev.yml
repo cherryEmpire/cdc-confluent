@@ -7,30 +7,39 @@ spring:
       max-request-size: 10MB
       max-file-size: 10MB
   datasource:
-    url: jdbc:mysql://192.168.1.14:3306/user_dev?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
-    username: root
-    password: cherry1234
+    url: jdbc:mysql://192.168.1.16:3310/confluent?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+    username: dev1
+    password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     database: mysql
     generate-ddl: true
     hibernate:
       ddl-auto: update
-    show-sql: false
+    show-sql: true
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
   rabbitmq:
-    addresses: 192.168.1.14
+    addresses: 192.168.1.16
     port: 5672
-    virtual-host: 192.168.1.14
+#    virtual-host: 192.168.1.16
+    virtual-host: /
     username: dev1
-    password: dev123456
+    password: 100648
   elasticsearch:
-    uris: http://192.168.1.14:9200
+    uris: http://192.168.1.16:9200
     username: elastic
     password: dev123456
 
 cherry:
   rabbit:
     addUserQueueName: rabbit.add.user
+
+
+graphql:
+  servlet:
+    cors-enabled: false
+  playground:
+    cdn:
+      enabled: true

@@ -1,5 +1,7 @@
 package com.cherry.entities;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -8,62 +10,24 @@ import java.io.Serializable;
  * @Date : 2022/1/30 22:02
  * @Description: Department
  */
-@Entity(name = "department")
+@Entity(name = "depart_master")
+@Data
 public class Department implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "depart_id")
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "depart_name")
     private String name;
 
-    @Column(name = "parent_id")
-    private Long parentId;
+    @Column(name = "parent")
+    private Long parent;
 
-    @Column(name = "type")
+    @Column(name = "depart_type")
     private String type;
 
-    @Column(name = "address")
-    private String address;
+    @Column(name = "description")
+    private String description;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Long getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 }

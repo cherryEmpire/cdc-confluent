@@ -43,17 +43,15 @@ public class DataManagerServiceImpl implements DataManagerService {
         for (int i = 0; i < 1000000; i++) {
             User user = new User();
             user.setName("Name" + i);
-            user.setFullName("setFullName" + i);
+            user.setType("Type" + i);
             int x = i + 7;
             if (x >= 7 && x <= 106) {
-                user.setDepartmentId((long) x);
+                user.setDepartment((long) x);
             } else {
                 x = x % 106;
-                user.setDepartmentId((long) x);
+                user.setDepartment((long) x);
             }
-            user.setEmail("Name" + i + "@cherry.com");
-            user.setPhone("Name" + i + "-10086");
-            user.setWechat("Name" + i + "-ZZZ");
+            user.setLevel("Level" + i);
             user.setPassword("Name" + i + "-123456");
             users.add(user);
         }
@@ -88,11 +86,11 @@ public class DataManagerServiceImpl implements DataManagerService {
         Department department = new Department();
         department.setId((long) id);
         if (parentId != null) {
-            department.setParentId((long) parentId);
+            department.setParent((long) parentId);
         }
         department.setName(name);
         department.setType(type);
-        department.setAddress(address);
+        department.setDescription(address);
         return department;
     }
 

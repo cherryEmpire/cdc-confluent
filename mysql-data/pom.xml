@@ -16,6 +16,7 @@
         <maven.compiler.source>11</maven.compiler.source>
         <swagger.version>3.0.0</swagger.version>
         <mysql.version>8.0.16</mysql.version>
+        <graphql.version>12.0.0</graphql.version>
     </properties>
 
     <dependencies>
@@ -56,6 +57,19 @@
             <groupId>com.cherry.confluent</groupId>
             <artifactId>cherry-common</artifactId>
             <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.graphql-java-kickstart</groupId>
+            <artifactId>graphql-spring-boot-starter</artifactId>
+            <version>${graphql.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.graphql-java-kickstart/graphql-java-tools -->
+        <dependency>
+            <groupId>com.graphql-java-kickstart</groupId>
+            <artifactId>graphql-java-tools</artifactId>
+            <version>12.0.2</version>
         </dependency>
 
     </dependencies>

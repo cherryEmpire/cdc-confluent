@@ -1,0 +1,31 @@
+type Query {
+    searchUser(key: String): [User]
+}
+
+type Mutation {
+    updateUser(user: UserInput): User
+}
+
+input UserInput {
+    id: ID
+    name: String
+    type: String
+    level: String
+    department: Int
+    password: String
+}
+
+type User {
+    id: ID
+    name: String
+    type: String
+    level: String
+    department: Int
+}
+
+type Depart {
+    id: ID
+    title: String
+    content: String
+    userId: Int
+}
