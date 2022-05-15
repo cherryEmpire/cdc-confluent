@@ -15,8 +15,8 @@ import springfox.documentation.oas.annotations.EnableOpenApi;
 @EnableWebMvc
 @SpringBootApplication
 @ComponentScan(basePackages = "com.cherry.*")
-public class MysqlDataStarter {
+public class ConfluentApp {
     public static void main(String[] args) {
-        SpringApplication.run(MysqlDataStarter.class, args);
+        SpringApplication.run(ConfluentApp.class, args);
     }
 }
